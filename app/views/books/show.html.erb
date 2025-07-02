@@ -5,7 +5,7 @@
 </div>
 
 <nav class="page-nav">
-  <%= link_to t('links.edit'), edit_book_path(@book) %> |
-  <%= link_to t('links.back'), books_path %>
-  <%= button_to t('links.delete'), book_path(@book, locale: I18n.locale), method: :delete %>
+  <%= link_to t('links.edit', model: t('activerecord.models.book')), edit_book_path(@book) %> |
+  <%= link_to t('links.back', model: t('activerecord.models.book')), books_path %>
+  <%= button_to t('links.delete', model: t('activerecord.models.book')), book_path(@book, locale: I18n.locale), method: :delete %>
 </nav>
