@@ -52,7 +52,7 @@ class BooksController < ApplicationController
     @book.destroy
 
     respond_to do |format|
-      format.html { redirect_to books_url(locale: params[:locale]), notice: t('flash.books.delete') }
+      format.html { redirect_to books_url, notice: t('flash.books.delete') }
       format.json { head :no_content }
     end
   end
