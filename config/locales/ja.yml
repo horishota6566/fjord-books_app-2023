@@ -193,13 +193,12 @@ ja:
     edit:
       heading: '本の編集'
   links:
-    show: '本の詳細を見る'
-    new: '本を追加'
-    edit: '本の情報を編集'
-    back: '本一覧に戻る'
-    delete: '本を削除'
+    show: '%{model}の詳細を見る'
+    new: '%{model}を追加'
+    edit: '%{model}の情報を編集'
+    back: '%{model}一覧に戻る'
+    delete: '%{model}を削除'
   flash:
-    books:
-      create: '本を追加しました。'
-      update: '本の情報を更新しました。'
-      delete: '本を削除しました。'
+    create: '%{model}を追加しました。'
+    update: '%{model}の情報を更新しました。'
+    delete: '%{model}を削除しました。'

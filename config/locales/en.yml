@@ -229,13 +229,12 @@ en:
     edit:
       heading: 'Editing book'
   links:
-    show: 'Show this book'
-    new: 'New book'
-    edit: 'Edit this book'
-    back: 'Back to books'
-    delete: 'Delete this book'
+    show: 'Show this %{model}'
+    new: 'New %{model}'
+    edit: 'Edit this %{model}'
+    back: 'Back to %{model} list'
+    delete: 'Delete this %{model}'
   flash:
-    books:
-      create: 'Book was successfully created.'
-      update: 'Book was successfully updated.'
-      delete: 'Book was successfully destroyed.'
+    create: '%{model} was successfully created.'
+    update: '%{model} was successfully updated.'
+    delete: '%{model} was successfully deleted.'
