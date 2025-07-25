@@ -43,15 +43,15 @@ Book.create!(
 end
 
 50.times do |n|
-  email = n.zero? ? "example@booksapp.test" : "example-#{n}@booksapp.test"
+  email = n.zero? ? 'example@booksapp.test' : "example-#{n}@booksapp.test"
 
   User.create!(
-    email: email,
-    password: "password",
-    password_confirmation: "password",
-    postal_code: "123-4567",
-    address: "東京都渋谷区1-1-1",
-    introduction: "自己紹介文です。"
+    email:,
+    password: 'password',
+    password_confirmation: 'password',
+    postal_code: '123-4567',
+    address: '東京都渋谷区1-1-1',
+    introduction: '自己紹介文です。'
   )
 end
 
