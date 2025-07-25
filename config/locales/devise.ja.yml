@@ -1,0 +1,19 @@
+ja:
+  devise:
+    registrations:
+      user:
+        sign_up: 'アカウントの登録'
+        edit: "%{resource}を編集"
+        cancel: 'アカウントを削除'
+    shared:
+      messages:
+        minimum_password_length: "最低 %{count} 文字"
+        leave_blank: '変更しない場合は空欄のままにしてください'
+        current_password: '変更を確認するために現在のパスワードが必要です'
+        unhappy: 不満がありますか？
+        confirm: '本当に実行しますか？'
+      links:
+        signup: '登録する'
+        update: '更新する'
+        cancel: '削除する'
+        back: '戻る'
