@@ -216,3 +216,5 @@ ja:
     registrations:
       edit:
         title: "アカウント編集"
+      shared:
+        icon: 'アイコン'
