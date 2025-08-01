@@ -1,11 +1,10 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: %i[ show edit update destroy ]
-
   def index
     @reports = Report.all
   end
 
   def show
+    @report = Report.find(params[:id])
   end
 
   def new
@@ -38,10 +37,6 @@ class ReportsController < ApplicationController
   end
 
   private
-    def set_report
-      @report = Report.find(params[:id])
-    end
-
     def report_params
       params.require(:report).permit(:title, :content)
     end
