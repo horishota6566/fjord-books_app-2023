@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  before_action :authorize_user!, only: %i[ edit update destroy ]
+
   def index
     @reports = Report.all
   end
@@ -37,6 +39,11 @@ class ReportsController < ApplicationController
   end
 
   private
+    def authorize_user!
+      @report = current_user.reports.find_by(id: params[:id])
+      redirect_to root_url, status: :see_other if @report.nil?
+    end
+
     def report_params
       params.require(:report).permit(:title, :content)
     end
