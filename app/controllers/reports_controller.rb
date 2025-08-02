@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
   end
 
   def create
-    @report = Report.new(report_params)
+    @report = current_user.reports.build(report_params)
     if @report.save
       redirect_to report_url(@report), notice: "Report was successfully created."
     else
