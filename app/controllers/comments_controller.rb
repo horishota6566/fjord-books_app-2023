@@ -1,15 +1,17 @@
 class CommentsController < ApplicationController
+  before_action :set_commentable, only: [:create]
   before_action :set_comment, only: %i[ edit update destroy ]
 
   def edit
   end
 
   def create
-    @comment = Comment.new(comment_params)
+    @comment = @commentable.comments.build(comment_params)
+    @comment.user = current_user
     if @comment.save
-      redirect_to comment_url(@comment), notice: "Comment was successfully created."
+      redirect_to @comment.commentable, notice: "Comment was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      redirect_to @comment.commentable, status: :unprocessable_entity, alert: "Comment could not be created."
     end
   end
 
@@ -27,6 +29,14 @@ class CommentsController < ApplicationController
   end
 
   private
+    def set_commentable
+      if params[:book_id]
+        @commentable = Book.find(params[:book_id])
+      elsif params[:report_id]
+        @commentable = Report.find(params[:report_id])
+      end
+    end
+
     def set_comment
       @comment = Comment.find(params[:id])
     end
