@@ -10,3 +10,9 @@
 
   <%= button_to t('views.common.destroy', name: Book.model_name.human.downcase), @book, method: :delete %>
 </nav>
+
+<h2>コメント投稿</h2>
+<%= render 'comments/form', commentable: @book, comment: @comment %>
+
+<h2>コメント一覧</h2>
+<%= render @book.comments %>
