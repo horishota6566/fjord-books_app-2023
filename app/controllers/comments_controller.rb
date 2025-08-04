@@ -17,9 +17,9 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to comment_url(@comment), notice: "Comment was successfully updated."
+      redirect_to @comment.commentable, notice: "Comment was successfully updated."
     else
-      render :edit, status: :unprocessable_entity
+      redirect_to edit_comment_path(@comment), status: :unprocessable_entity, alert: "Comment could not be created."
     end
   end
 
