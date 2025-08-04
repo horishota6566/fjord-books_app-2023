@@ -1,4 +1,6 @@
-<%= form_with(model: [commentable, comment]) do |form| %>
+<% form_model = commentable ? [commentable, comment] : comment %>
+
+<%= form_with(model: form_model) do |form| %>
   <% if comment.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -13,7 +15,7 @@
 
   <div>
     <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content, required: true %>
+    <%= form.text_area :content %>
   </div>
 
   <div>
