@@ -13,7 +13,9 @@
   </p>
 </div>
 
-<nav>
-  <%= link_to 'Edit this comment', edit_comment_path(comment) %>
-  <%= button_to 'Destroy this comment', comment, method: :delete %>
-</nav>
+<% if comment.user == current_user %>
+  <nav>
+    <%= link_to 'Edit this comment', edit_comment_path(comment) %>
+    <%= button_to 'Destroy this comment', comment, method: :delete %>
+  </nav>
+<% end %>
