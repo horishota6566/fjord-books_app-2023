@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_commentable, only: [:create]
   before_action :set_comment, only: %i[ edit update destroy ]
+  before_action :authorize_user!, only: %i[ edit update destroy ]
 
   def edit
   end
@@ -39,6 +40,10 @@ class CommentsController < ApplicationController
 
     def set_comment
       @comment = Comment.find(params[:id])
+    end
+
+    def authorize_user!
+      redirect_to root_path, status: :see_other, alert: 'You are not authorized to perform this action.' unless @comment.user == current_user
     end
 
     def comment_params
