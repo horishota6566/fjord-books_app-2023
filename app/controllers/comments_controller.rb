@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
     end
 
     def authorize_user!
-      redirect_to root_path, status: :see_other, alert: 'You are not authorized to perform this action.' unless @comment.user == current_user
+      redirect_to root_path, status: :see_other unless @comment.user == current_user
     end
 
     def comment_params
