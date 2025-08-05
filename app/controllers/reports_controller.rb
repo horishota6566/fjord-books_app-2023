@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show edit update destroy]
-  before_action :authorize_user!, only: %i[ edit update destroy ]
+  before_action :authorize_user!, only: %i[edit update destroy]
 
   def index
     @reports = Report.order(:id).page(params[:page])
@@ -15,8 +17,7 @@ class ReportsController < ApplicationController
     @report = Report.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @report = current_user.reports.build(report_params)
@@ -41,15 +42,16 @@ class ReportsController < ApplicationController
   end
 
   private
-    def set_report
-      @report = Report.find(params[:id])
-    end
 
-    def authorize_user!
-      redirect_to root_url, status: :see_other unless @report.user == current_user
-    end
+  def set_report
+    @report = Report.find(params[:id])
+  end
 
-    def report_params
-      params.require(:report).permit(:title, :content)
-    end
+  def authorize_user!
+    redirect_to root_url, status: :see_other unless @report.user == current_user
+  end
+
+  def report_params
+    params.require(:report).permit(:title, :content)
+  end
 end

@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   before_action :set_commentable, only: [:create]
-  before_action :set_comment, only: %i[ edit update destroy ]
-  before_action :authorize_user!, only: %i[ edit update destroy ]
+  before_action :set_comment, only: %i[edit update destroy]
+  before_action :authorize_user!, only: %i[edit update destroy]
 
-  def edit
-  end
+  def edit; end
 
   def create
     @comment = @commentable.comments.build(comment_params)
@@ -30,23 +31,24 @@ class CommentsController < ApplicationController
   end
 
   private
-    def set_commentable
-      if params[:book_id]
-        @commentable = Book.find(params[:book_id])
-      elsif params[:report_id]
-        @commentable = Report.find(params[:report_id])
-      end
-    end
 
-    def set_comment
-      @comment = Comment.find(params[:id])
+  def set_commentable
+    if params[:book_id]
+      @commentable = Book.find(params[:book_id])
+    elsif params[:report_id]
+      @commentable = Report.find(params[:report_id])
     end
+  end
 
-    def authorize_user!
-      redirect_to root_path, status: :see_other unless @comment.user == current_user
-    end
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
-    def comment_params
-      params.require(:comment).permit(:content)
-    end
+  def authorize_user!
+    redirect_to root_path, status: :see_other unless @comment.user == current_user
+  end
+
+  def comment_params
+    params.require(:comment).permit(:content)
+  end
 end
