@@ -19,7 +19,8 @@
 
 <% if @report.comments.present? %>
   <h2>Comments</h2>
-  <%= render @report.comments %>
+  <%= render @comments %>
+  <%= paginate @comments %>
 <% else %>
   <p>No comments yet.</p>
 <% end %>
