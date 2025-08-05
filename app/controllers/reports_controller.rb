@@ -1,12 +1,12 @@
 class ReportsController < ApplicationController
+  before_action :set_report, only: %i[show edit update destroy]
   before_action :authorize_user!, only: %i[ edit update destroy ]
 
   def index
-    @reports = Report.all
+    @reports = Report.order(:id).page(params[:page])
   end
 
   def show
-    @report = Report.find(params[:id])
     @comment = Comment.new
   end
 
@@ -40,9 +40,12 @@ class ReportsController < ApplicationController
   end
 
   private
+    def set_report
+      @report = Report.find(params[:id])
+    end
+
     def authorize_user!
-      @report = current_user.reports.find_by(id: params[:id])
-      redirect_to root_url, status: :see_other if @report.nil?
+      redirect_to root_url, status: :see_other unless @report.user == current_user
     end
 
     def report_params
