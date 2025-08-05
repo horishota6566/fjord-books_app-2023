@@ -75,4 +75,17 @@ User.order(:id).each.with_index(1) do |user, n|
   user.avatar.attach(io: File.open(image_path), filename: 'avatar.png')
 end
 
+Report.transaction do
+  users = User.all
+  first_user = users.first
+
+  50.times do |n|
+    Report.create!(
+      title: Faker::Book.title,
+      content: Faker::Lorem.paragraph,
+      user: n < 3 ? first_user : users.sample
+    )
+  end
+end
+
 puts '初期データの投入が完了しました。' # rubocop:disable Rails/Output
