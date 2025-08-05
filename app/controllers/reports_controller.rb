@@ -8,6 +8,7 @@ class ReportsController < ApplicationController
 
   def show
     @comment = Comment.new
+    @comments = @report.comments.order(:id).page(params[:page]).per(10)
   end
 
   def new
