@@ -3,18 +3,21 @@
     <strong>Content:</strong>
     <%= comment.content %>
   </p>
+
   <p>
     <strong>Name:</strong>
     <%= comment.user.name %>
   </p>
+
   <p>
     <strong>Created_at:</strong>
     <%= comment.created_at %>
   </p>
+
 </div>
 
 <% if comment.user == current_user %>
-  <nav>
+  <nav class="page-nav">
     <%= link_to 'Edit this comment', edit_comment_path(comment) %>
     <%= button_to 'Destroy this comment', comment, method: :delete %>
   </nav>
