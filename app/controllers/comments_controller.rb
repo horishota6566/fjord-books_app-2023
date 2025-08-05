@@ -10,23 +10,23 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
-      redirect_to @comment.commentable, notice: "Comment was successfully created."
+      redirect_to @comment.commentable, notice: t('controllers.common.notice_create', name: Comment.model_name.human)
     else
-      redirect_to @comment.commentable, status: :unprocessable_entity, alert: "Comment could not be created."
+      redirect_to @comment.commentable, status: :unprocessable_entity, alert: t('controllers.common.alert_create', name: Comment.model_name.human)
     end
   end
 
   def update
     if @comment.update(comment_params)
-      redirect_to @comment.commentable, notice: "Comment was successfully updated."
+      redirect_to @comment.commentable, notice: t('controllers.common.notice_update', name: Comment.model_name.human)
     else
-      redirect_to edit_comment_path(@comment), status: :unprocessable_entity, alert: "Comment could not be created."
+      redirect_to edit_comment_path(@comment), status: :unprocessable_entity, alert: t('controllers.common.alert_update', name: Comment.model_name.human)
     end
   end
 
   def destroy
     @comment.destroy
-    redirect_to @comment.commentable, notice: "Comment was successfully destroyed."
+    redirect_to @comment.commentable, notice: t('controllers.common.notice_destroy', name: Comment.model_name.human)
   end
 
   private
