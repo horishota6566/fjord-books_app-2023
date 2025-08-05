@@ -10,3 +10,9 @@
     <%= link_to "Back to reports", reports_path %>
   <% end %>
 </div>
+
+<h2>コメント投稿</h2>
+<%= render 'comments/form', commentable: @report, comment: @comment %>
+
+<h2>コメント一覧</h2>
+<%= render @report.comments %>
