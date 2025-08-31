@@ -6,6 +6,15 @@
 
 <%= render 'shared/comments', commentable: @report %>
 
+<% if @report.mentioned_reports.any? %>
+  <h3>この日報は以下の日報からリンクされています</h3>
+  <ul>
+    <% @report.mentioned_reports.each do |report| %>
+      <li><%= link_to(report.title.presence, report_path(report)) %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <nav class="page-nav">
   <% if @report.editable?(current_user) %>
     <%= link_to t('views.common.edit', name: Report.model_name.human.downcase), edit_report_path(@report) %> |
