@@ -1,0 +1,10 @@
+<% if @report.mentioned_reports.any? %>
+  <div>
+    <h3>この日報に言及している日報:</h3>
+    <% @report.mentioned_reports.each do |report| %>
+      <ul>
+        <li><%= link_to(report.title, report_path(report)) %></li>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
