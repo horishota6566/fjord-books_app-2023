@@ -22,4 +22,10 @@ class Report < ApplicationRecord
   def created_on
     created_at.to_date
   end
+
+  private
+  def extract_report_ids_from(text)
+    ids = text.scan(%r{http://localhost:3000/reports/(\d+)})
+    ids.flatten.map(&:to_i).uniq.without(id)
+  end
 end
