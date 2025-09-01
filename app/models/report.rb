@@ -15,6 +15,8 @@ class Report < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
 
+  after_commit :rebuild_mentions!, on: %i[create update]
+
   def editable?(target_user)
     user == target_user
   end
@@ -27,5 +29,13 @@ class Report < ApplicationRecord
   def extract_report_ids_from(text)
     ids = text.scan(%r{http://localhost:3000/reports/(\d+)})
     ids.flatten.map(&:to_i).uniq.without(id)
+  end
+
+  def rebuild_mentions!
+    ids = extract_report_ids_from(content)
+    ApplicationRecord.transaction do
+      active_mentions.delete_all
+      ids.each { |rid| active_mentions.create!(mentioned_id: rid) }
+    end
   end
 end
