@@ -1,0 +1,24 @@
+<div>
+  <p>
+    <strong><%= Comment.human_attribute_name(:content) %>:</strong>
+    <%= comment.content %>
+  </p>
+
+  <p>
+    <strong><%= Comment.human_attribute_name(:user) %>:</strong>
+    <%= comment.user.name %>
+  </p>
+
+  <p>
+    <strong><%= Comment.human_attribute_name(:created_at) %>:</strong>
+    <%= comment.created_at %>
+  </p>
+
+</div>
+
+<% if comment.user == current_user %>
+  <nav class="page-nav">
+    <%= link_to t('views.common.edit', name: Comment.model_name.human.downcase), edit_comment_path(comment) %>
+    <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), comment, method: :delete %>
+  </nav>
+<% end %>
