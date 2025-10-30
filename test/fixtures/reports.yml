@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: one
-  title: MyString
-  content: MyText
+  title: 'テスト技法について学習'
+  content: 'テスト技法について学習しました。'
+  user: alice
 
 two:
-  user: two
-  title: MyString
-  content: MyText
+  title: 'TDDについて学習'
+  content: 'TDDについて学習しました。'
+  user: bob
