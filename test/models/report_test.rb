@@ -6,53 +6,53 @@ class ReportTest < ActiveSupport::TestCase
   setup do
     @alice  = users(:alice)
     @bob    = users(:bob)
-    @r1 = reports(:alice_report)
-    @r2 = reports(:bob_report)
+    @alice_report = reports(:alice_report)
+    @bob_report = reports(:bob_report)
   end
 
   test '#editable? returns true when user is the author' do
-    assert @r1.editable?(@alice)
+    assert @alice_report.editable?(@alice)
   end
 
   test '#editable? returns false when user is not the author' do
-    assert_not @r1.editable?(@bob)
+    assert_not @alice_report.editable?(@bob)
   end
 
   test '#created_on returns date part of created_at' do
-    @r1.update(created_at: Time.zone.local(2025, 10, 31, 12, 34, 56))
-    assert_equal Date.new(2025, 10, 31), @r1.created_on
+    @alice_report.update(created_at: Time.zone.local(2025, 10, 31, 12, 34, 56))
+    assert_equal Date.new(2025, 10, 31), @alice_report.created_on
   end
 
   test '#save_mentions builds mention relationships from URLs in the content' do
     report = Report.create!(
       title: 'Railsの学習',
-      content: "次の日報が参考になった → #{report_url(@r1.id)}",
+      content: "次の日報が参考になった → #{report_url(@alice_report.id)}",
       user: @alice
     )
 
-    assert_equal [@r1.id], report.reload.mentioning_report_ids
+    assert_equal [@alice_report.id], report.reload.mentioning_report_ids
   end
 
   test '#save_mentions rebuilds mention relationships when saving' do
     report = Report.create!(
       title: 'Railsの学習',
-      content: "次の日報が参考になった → #{report_url(@r1.id)}",
+      content: "次の日報が参考になった → #{report_url(@alice_report.id)}",
       user: @alice
     )
 
-    assert_changes -> { report.reload.mentioning_report_ids }, from: [@r1.id], to: [@r2.id] do
-      report.update!(content: "次の日報が参考になった → #{report_url(@r2.id)}")
+    assert_changes -> { report.reload.mentioning_report_ids }, from: [@alice_report.id], to: [@bob_report.id] do
+      report.update!(content: "次の日報が参考になった → #{report_url(@bob_report.id)}")
     end
   end
 
   test '#save_mentions removes duplicate IDs when extracting from content' do
     report = Report.create!(
       title: 'Railsの学習',
-      content: "次の日報が参考になった → #{report_url(@r1.id)} #{report_url(@r1.id)}",
+      content: "次の日報が参考になった → #{report_url(@alice_report.id)} #{report_url(@alice_report.id)}",
       user: @alice
     )
 
-    assert_equal [@r1.id], report.reload.mentioning_report_ids
+    assert_equal [@alice_report.id], report.reload.mentioning_report_ids
   end
 
   test '#save_mentions excludes the report itself from mention targets' do
