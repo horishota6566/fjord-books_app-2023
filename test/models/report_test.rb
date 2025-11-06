@@ -6,8 +6,8 @@ class ReportTest < ActiveSupport::TestCase
   setup do
     @alice  = users(:alice)
     @bob    = users(:bob)
-    @r1 = reports(:one)
-    @r2 = reports(:two)
+    @r1 = reports(:alice_report)
+    @r2 = reports(:bob_report)
   end
 
   test '#editable? returns true when user is the author' do

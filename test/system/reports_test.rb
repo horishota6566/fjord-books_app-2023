@@ -12,7 +12,7 @@ class ReportsTest < ApplicationSystemTestCase
   end
 
   test 'visiting the index' do
-    report = reports(:one)
+    report = reports(:alice_report)
     visit reports_url
     assert_selector 'h1', text: '日報の一覧'
     assert_text report.title
@@ -33,7 +33,7 @@ class ReportsTest < ApplicationSystemTestCase
   end
 
   test 'should update report' do
-    report = reports(:one)
+    report = reports(:alice_report)
     visit report_url(report)
     click_on 'この日報を編集'
 
@@ -46,7 +46,7 @@ class ReportsTest < ApplicationSystemTestCase
   end
 
   test 'should destroy report' do
-    report = reports(:one)
+    report = reports(:alice_report)
     visit report_url(report)
     assert_difference('Report.count', -1) do
       click_button 'この日報を削除'
