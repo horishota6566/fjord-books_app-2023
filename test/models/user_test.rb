@@ -9,7 +9,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should return email when name is blank' do
-    user = users(:carol)
+    user = User.new(name: '', email: 'carol@example.com')
     assert_equal 'carol@example.com', user.name_or_email
   end
 end
