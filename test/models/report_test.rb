@@ -3,7 +3,70 @@
 require 'test_helper'
 
 class ReportTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @alice  = users(:alice)
+    @bob    = users(:bob)
+    @alice_report = reports(:alice_report)
+    @bob_report = reports(:bob_report)
+  end
+
+  test '#editable? returns true when user is the author' do
+    assert @alice_report.editable?(@alice)
+  end
+
+  test '#editable? returns false when user is not the author' do
+    assert_not @alice_report.editable?(@bob)
+  end
+
+  test '#created_on returns date part of created_at' do
+    @alice_report.update(created_at: Time.zone.local(2025, 10, 31, 12, 34, 56))
+    assert_equal Date.new(2025, 10, 31), @alice_report.created_on
+  end
+
+  test '#save_mentions builds mention relationships from URLs in the content' do
+    report = Report.create!(
+      title: 'Railsの学習',
+      content: "次の日報が参考になった → #{report_url(@alice_report.id)}",
+      user: @alice
+    )
+
+    assert_equal [@alice_report.id], report.reload.mentioning_report_ids
+  end
+
+  test '#save_mentions rebuilds mention relationships when saving' do
+    report = Report.create!(
+      title: 'Railsの学習',
+      content: "次の日報が参考になった → #{report_url(@alice_report.id)}",
+      user: @alice
+    )
+
+    assert_changes -> { report.reload.mentioning_report_ids }, from: [@alice_report.id], to: [@bob_report.id] do
+      report.update!(content: "次の日報が参考になった → #{report_url(@bob_report.id)}")
+    end
+  end
+
+  test '#save_mentions removes duplicate IDs when extracting from content' do
+    report = Report.create!(
+      title: 'Railsの学習',
+      content: "次の日報が参考になった → #{report_url(@alice_report.id)} #{report_url(@alice_report.id)}",
+      user: @alice
+    )
+
+    assert_equal [@alice_report.id], report.reload.mentioning_report_ids
+  end
+
+  test '#save_mentions excludes the report itself from mention targets' do
+    report = Report.create!(
+      title: 'Railsの学習',
+      content: '内容未定',
+      user: @alice
+    )
+
+    report.update!(content: "次の日報が参考になった → #{report_url(report.id)}")
+    assert_not_includes report.reload.mentioning_report_ids, report.id
+  end
+
+  private
+
+  def report_url(id) = "http://localhost:3000/reports/#{id}"
 end
